@@ -21,6 +21,16 @@ main {
     padding: 20px;
 }
 
+form {
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 button {
     background-color: #007BFF;
     color: white;
@@ -35,26 +45,57 @@ button:hover {
     background-color: #0056b3;
 }
 
+#raceList {
+    margin-bottom: 20px;
+}
+
+#raceList a {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+#raceList a:hover {
+    background-color: #d1d1d1;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
+th, td {
+    border: 1px solid #007BFF;
+    padding: 10px;
+    text-align: left; /* Default left alignment for cells */
+}
+
 th {
     background-color: #007BFF;
     color: white;
-    text-align: center; /* Center the column headers */
+    text-align: center; /* Centered headers */
 }
 
 td {
-    text-align: left; /* Default left alignment */
+    background-color: #f9f9f9;
 }
 
-td:nth-child(3) { /* Weight column */
+td.empty {
+    background-color: #fff; /* Empty cells will be white */
+}
+
+/* Specific styles for Weight column */
+td:nth-child(3) {
     text-align: right; /* Align Weight to the right */
 }
 
+/* L3 AVG and other center-aligned columns */
 td:nth-child(5), /* L3 AVG */
 td:nth-child(6), /* 1LR */
 td:nth-child(7), /* 2LR */
@@ -68,7 +109,42 @@ td:nth-child(14) { /* OR/BEST Diff */
     text-align: center; /* Center these columns */
 }
 
-.back {
+button.back {
     margin-top: 20px;
-    display: inline-block;
+}
+
+/* Slim down the odds table */
+#oddsTable {
+    width: 50%; /* Reduce the width to make it slimmer */
+    margin: 20px auto; /* Center the table */
+    border-collapse: collapse; /* Remove space between table cells */
+}
+
+#oddsTable th, #oddsTable td {
+    padding: 8px 12px; /* Reduce padding to make it slimmer */
+    font-size: 14px; /* Adjust font size to make text more compact */
+}
+
+#oddsTable th {
+    background-color: #007BFF; /* Keep the same color as other headers */
+    color: white;
+    text-align: left; /* Align text to the left */
+}
+
+#oddsTable td {
+    border: 1px solid #007BFF; /* Keep borders consistent */
+}
+
+#oddsTable tr:nth-child(even) {
+    background-color: #f9f9f9; /* Optional: Zebra striping for readability */
+}
+
+#oddsTable tr:hover {
+    background-color: #f1f1f1; /* Optional: Hover effect */
+}
+
+@media (max-width: 600px) {
+    button {
+        width: 100%;
+    }
 }
