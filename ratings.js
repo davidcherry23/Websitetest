@@ -5,7 +5,7 @@ const nhRange = "NH!A2:O600"; // Adjusted range to include more rows
 
 async function fetchData(range) {
     try {
-        const url = "https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}";
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
         const response = await axios.get(url);
         return response.data.values || [];
     } catch (error) {
@@ -19,8 +19,8 @@ async function loadRatings(track, time) {
         const flatData = await fetchData(flatRange);
         const nhData = await fetchData(nhRange);
 
-        console.log(Fetched ${flatData.length} rows from FLAT);
-        console.log(Fetched ${nhData.length} rows from NH);
+        console.log(`Fetched ${flatData.length} rows from FLAT`);
+        console.log(`Fetched ${nhData.length} rows from NH`);
 
         // Filter data based on track and time
         const filteredRatings = flatData.concat(nhData).filter(row => {
