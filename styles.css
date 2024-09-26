@@ -39,6 +39,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-align: center; /* Center the text inside buttons */
 }
 
 button:hover {
@@ -49,19 +50,10 @@ button:hover {
     margin-bottom: 20px;
 }
 
-#raceList a {
-    display: block;
-    margin: 5px 0;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s;
-}
-
-#raceList a:hover {
-    background-color: #d1d1d1;
+#raceList button {
+    display: block; /* Ensure each button takes a new line */
+    margin: 5px 0; /* Adjust margin between buttons */
+    width: 100%; /* Ensure buttons use the full width available */
 }
 
 table {
@@ -89,6 +81,7 @@ td {
 td.empty {
     background-color: #fff; /* Empty cells will be white */
 }
+
 
 /* Specific styles for Weight column */
 td:nth-child(3) {
