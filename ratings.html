@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Race Ratings</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Add this line -->
+</head>
+<body>
+    <header>
+        <h1>Horse Race Ratings</h1>
+    </header>
+    <main>
+        <table id="ratingsTable">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Track</th>
+                    <th>Weight</th>
+                    <th>Horse Name</th>
+                    <th>L3 AVG</th>
+                    <th>1LR</th>
+                    <th>2LR</th>
+                    <th>3LR</th>
+                    <th>4LR</th>
+                    <th>5LR</th>
+                    <th>6LR</th>
+                    <th>Best</th>
+                    <th>OR</th>
+                    <th>OR/BEST Diff</th>
+                    <th>LWIN OR</th>
+                </tr>
+            </thead>
+            <tbody id="ratingsBody">
+                <!-- Ratings will be inserted here -->
+            </tbody>
+        </table>
+        <button class="back" onclick="window.history.back()">Back to Homepage</button>
+    </main>
+    <script src="ratings.js"></script>
+</body>
+</html>
