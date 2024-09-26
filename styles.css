@@ -21,16 +21,6 @@ main {
     padding: 20px;
 }
 
-form {
-    margin-bottom: 20px;
-}
-
-input[type="file"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 button {
     background-color: #007BFF;
     color: white;
@@ -45,48 +35,26 @@ button:hover {
     background-color: #0056b3;
 }
 
-#raceList {
-    margin-bottom: 20px;
-}
-
-#raceList a {
-    display: block;
-    margin: 5px 0;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s;
-}
-
-#raceList a:hover {
-    background-color: #d1d1d1;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-th, td {
-    border: 1px solid #007BFF;
-    padding: 10px;
-    text-align: left;
-}
-
 th {
     background-color: #007BFF;
     color: white;
+    text-align: center; /* Center the column headers */
 }
 
 td {
-    /* Existing styles */
     text-align: left; /* Default left alignment */
 }
 
-td:nth-child(4), /* Horse Name */
+td:nth-child(3) { /* Weight column */
+    text-align: right; /* Align Weight to the right */
+}
+
 td:nth-child(5), /* L3 AVG */
 td:nth-child(6), /* 1LR */
 td:nth-child(7), /* 2LR */
