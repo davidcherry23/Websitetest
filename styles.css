@@ -93,6 +93,36 @@ button.back {
     margin-top: 20px;
 }
 
+/* Slim down the odds table */
+#oddsTable {
+    width: 50%; /* Reduce the width to make it slimmer */
+    margin: 20px auto; /* Center the table */
+    border-collapse: collapse; /* Remove space between table cells */
+}
+
+#oddsTable th, #oddsTable td {
+    padding: 8px 12px; /* Reduce padding to make it slimmer */
+    font-size: 14px; /* Adjust font size to make text more compact */
+}
+
+#oddsTable th {
+    background-color: #007BFF; /* Keep the same color as other headers */
+    color: white;
+    text-align: left; /* Align text to the left */
+}
+
+#oddsTable td {
+    border: 1px solid #007BFF; /* Keep borders consistent */
+}
+
+#oddsTable tr:nth-child(even) {
+    background-color: #f9f9f9; /* Optional: Zebra striping for readability */
+}
+
+#oddsTable tr:hover {
+    background-color: #f1f1f1; /* Optional: Hover effect */
+}
+
 @media (max-width: 600px) {
     button {
         width: 100%;
