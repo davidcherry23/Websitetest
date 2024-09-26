@@ -38,12 +38,12 @@ async function loadRatings(track, time) {
         const combinedOdds = flatOddsData.concat(nhOddsData);
 
         // Filter odds based on track and time
-        const getHorseOdds = (horseName) => {
-            const oddsRow = combinedOdds.find(row => row[0] === time && row[1] === track && row[2] === horseName);
-            return oddsRow ? oddsRow[3] : "N/A"; // Return odds or "N/A" if not found
-        };
+        const filteredOdds = combinedOdds.filter(row => {
+            return row[0] === time && row[1] === track;
+        });
 
         console.log("Filtered Ratings:", filteredRatings);
+        console.log("Filtered Odds:", filteredOdds);
 
         const ratingsBody = document.getElementById("ratingsBody");
         ratingsBody.innerHTML = ""; // Clear existing data
@@ -59,24 +59,45 @@ async function loadRatings(track, time) {
                     newRow.appendChild(newCell);
                 });
 
-                // Add My Odds column
-                const horseName = row[2]; // Assuming the horse name is in the 3rd column (index 2)
-                const myOddsCell = document.createElement("td");
-                myOddsCell.textContent = getHorseOdds(horseName);
-                newRow.appendChild(myOddsCell);
-
                 ratingsBody.appendChild(newRow);
             });
         } else {
             const noDataRow = document.createElement("tr");
             const noDataCell = document.createElement("td");
-            noDataCell.colSpan = 16; // Adjust according to your number of columns + My Odds column
+            noDataCell.colSpan = 16; // Adjust according to your number of columns
             noDataCell.textContent = "No ratings available.";
             noDataRow.appendChild(noDataCell);
             ratingsBody.appendChild(noDataRow);
         }
+
+        // Now populate the Odds Table
+        const oddsBody = document.getElementById("oddsBody");
+        oddsBody.innerHTML = ""; // Clear existing odds data
+
+        if (filteredOdds.length > 0) {
+            filteredOdds.forEach(row => {
+                const newRow = document.createElement("tr");
+
+                // Add odds data (Time, Track, Horse, Odds)
+                row.forEach(value => {
+                    const newCell = document.createElement("td");
+                    newCell.textContent = value === undefined ? "" : value; // Leave blank if undefined
+                    newRow.appendChild(newCell);
+                });
+
+                oddsBody.appendChild(newRow);
+            });
+        } else {
+            const noOddsRow = document.createElement("tr");
+            const noOddsCell = document.createElement("td");
+            noOddsCell.colSpan = 4; // Since we only have 4 columns (TIME, TRACK, HORSE, Odds)
+            noOddsCell.textContent = "No odds available.";
+            noOddsRow.appendChild(noOddsCell);
+            oddsBody.appendChild(noOddsRow);
+        }
+
     } catch (error) {
-        console.error("Error loading ratings:", error);
+        console.error("Error loading ratings or odds:", error);
     }
 }
 
