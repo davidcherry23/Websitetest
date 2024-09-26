@@ -43,12 +43,28 @@ async function loadRaceList() {
         raceList[track].add(time); // Add time to the Set
     });
 
-    // Create the HTML for the race list
-    const raceListDiv = document.getElementById('raceList');
+    // Create the HTML for the race list in table format
+    const raceListTable = document.getElementById('raceList');
     for (const track in raceList) {
         const times = Array.from(raceList[track]); // Convert Set back to array
-        const timesHTML = times.map(time => `<a href="ratings.html?track=${encodeURIComponent(track)}&time=${encodeURIComponent(time)}">${time}</a>`).join(' ');
-        raceListDiv.innerHTML += `<div><strong>${track}</strong> ${timesHTML}</div>`;
+        times.sort(); // Sort the times to display in order
+
+        // Create a table row for each track
+        const row = document.createElement('tr');
+
+        // Add track name as the first column
+        const trackCell = document.createElement('td');
+        trackCell.textContent = track;
+        row.appendChild(trackCell);
+
+        // Add race times as individual columns
+        times.forEach(time => {
+            const timeCell = document.createElement('td');
+            timeCell.innerHTML = `<a href="ratings.html?track=${encodeURIComponent(track)}&time=${encodeURIComponent(time)}">${time}</a>`;
+            row.appendChild(timeCell);
+        });
+
+        raceListTable.appendChild(row); // Append the row to the table
     }
 }
 
