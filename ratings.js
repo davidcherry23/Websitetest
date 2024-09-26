@@ -56,30 +56,30 @@ async function loadRatings(track, time) {
                 row.forEach((value, index) => {
                     const newCell = document.createElement("td");
                     newCell.textContent = value === undefined ? "" : value; // Leave blank if undefined
-                    
-                    // Center specific columns
-                    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13].includes(index)) {
-                        newCell.style.textAlign = 'center';
-                    }
-                    
-                    // Change color of OR/BEST Diff
-                    if (index === 13) { // OR/BEST Diff column
-                        if (value > 0) {
-                            newCell.style.color = 'green';
-                        } else if (value < 0) {
-                            newCell.style.color = 'orange';
-                        }
+
+                    // Align Weight to the right (3rd column)
+                    if (index === 2) {
+                        newCell.style.textAlign = 'right';
                     }
 
                     newRow.appendChild(newCell);
                 });
+
+                // Apply color coding to OR/BEST Diff
+                const bestOrDiffCell = newRow.cells[13]; // OR/BEST Diff
+                const bestOrDiffValue = parseFloat(bestOrDiffCell.textContent);
+                if (bestOrDiffValue >= 0) {
+                    bestOrDiffCell.style.color = 'green';
+                } else {
+                    bestOrDiffCell.style.color = 'orange';
+                }
 
                 ratingsBody.appendChild(newRow);
             });
         } else {
             const noDataRow = document.createElement("tr");
             const noDataCell = document.createElement("td");
-            noDataCell.colSpan = 16; // Adjust according to your number of columns
+            noDataCell.colSpan = 15; // Adjust according to your number of columns
             noDataCell.textContent = "No ratings available.";
             noDataRow.appendChild(noDataCell);
             ratingsBody.appendChild(noDataRow);
