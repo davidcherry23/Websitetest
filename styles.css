@@ -39,7 +39,6 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-align: center; /* Center the text inside buttons */
 }
 
 button:hover {
@@ -52,8 +51,19 @@ button:hover {
 
 #raceList button {
     display: block; /* Ensure each button takes a new line */
-    margin: 5px 0; /* Adjust margin between buttons */
-    width: 100%; /* Ensure buttons use the full width available */
+    margin: 5px auto; /* Center the buttons by using auto margins */
+    padding: 10px; /* Adjust padding for better appearance */
+    background-color: #007BFF; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center the text inside buttons */
+    width: 80%; /* Set a fixed width for the buttons, adjust as needed */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+#raceList button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 table {
@@ -81,7 +91,6 @@ td {
 td.empty {
     background-color: #fff; /* Empty cells will be white */
 }
-
 
 /* Specific styles for Weight column */
 td:nth-child(3) {
