@@ -5,7 +5,7 @@ const nhRange = "NH!A2:O600"; // Adjusted range to include more rows
 
 async function fetchData(range) {
     try {
-        const url = https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey};
+        const url = "https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}";
         const response = await axios.get(url);
         return response.data.values || [];
     } catch (error) {
