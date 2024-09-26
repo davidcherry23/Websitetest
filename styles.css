@@ -49,21 +49,19 @@ button:hover {
     margin-bottom: 20px;
 }
 
-#raceList button {
-    display: block; /* Ensure each button takes a new line */
-    margin: 5px auto; /* Center the buttons by using auto margins */
-    padding: 10px; /* Adjust padding for better appearance */
-    background-color: #007BFF; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    text-align: center; /* Center the text inside buttons */
-    width: 80%; /* Set a fixed width for the buttons, adjust as needed */
-    transition: background-color 0.3s; /* Smooth hover effect */
+#raceList a {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
 }
 
-#raceList button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+#raceList a:hover {
+    background-color: #d1d1d1;
 }
 
 table {
