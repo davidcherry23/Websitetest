@@ -1,4 +1,8 @@
-// Define fetchData function
+// Your API Key and Spreadsheet ID
+const API_KEY = 'AIzaSyBfoy9gpe6UHjolsmoi9kAx-iapdYs1-_U'; // Your API Key
+const SPREADSHEET_ID = '1yFsWAUB163U6I4iyUWdQUitRKoY08ESXMIjgZdCH80Q'; // Your Spreadsheet ID
+
+// Function to fetch data from the Google Sheets API
 async function fetchData(sheetName) {
     const range = `${sheetName}!A1:Z`; // Fetch all rows in the range
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
@@ -98,4 +102,5 @@ function determineRaceStatus(time) {
     }
 }
 
+// Call loadRaceList function to populate the race list
 loadRaceList();
