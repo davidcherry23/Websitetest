@@ -5,18 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horse Race Ratings</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Add this line -->
 </head>
 <body>
     <header>
         <h1>Horse Race Ratings</h1>
     </header>
     <main>
-        <div id="oddsComparison">
-            <h3>Odds Comparison</h3>
-        </div>
-
-        <!-- Collapsible Sections for Each Race -->
+        <!-- Ratings Table -->
         <table id="ratingsTable">
             <thead>
                 <tr>
@@ -38,14 +34,27 @@
                 </tr>
             </thead>
             <tbody id="ratingsBody">
+                <!-- Ratings will be inserted here -->
+            </tbody>
+        </table>
+        
+        <!-- Odds Table -->
+        <table id="oddsTable">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Track</th>
+                    <th>Horse</th>
+                    <th>Generated Odds</th>
+                </tr>
+            </thead>
+            <tbody id="oddsBody">
+                <!-- Odds will be inserted here -->
             </tbody>
         </table>
 
         <button class="back" onclick="window.history.back()">Back to Homepage</button>
     </main>
-    <footer>
-        <p>&copy; 2024 Horse Racing Ratings. <a href="#">Privacy Policy</a> | <a href="#">Terms</a> | <a href="#">Contact</a></p>
-    </footer>
     <script src="ratings.js"></script>
 </body>
 </html>
