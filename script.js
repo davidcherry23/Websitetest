@@ -1,3 +1,18 @@
+// Define fetchData function
+async function fetchData(sheetName) {
+    const range = `${sheetName}!A1:Z`; // Fetch all rows in the range
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
+
+    try {
+        const response = await axios.get(url);
+        console.log(`Fetched ${response.data.values.length} rows from ${sheetName}`);
+        return response.data.values; // Return the rows of your sheet
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return []; // Return an empty array on error
+    }
+}
+
 // Search/Filter Feature
 const searchBox = document.getElementById('searchBox');
 searchBox.addEventListener('input', function() {
@@ -24,7 +39,7 @@ darkModeToggle.addEventListener('click', function() {
 async function loadRaceList() {
     const flatData = await fetchData('FLAT');
     const nhData = await fetchData('NH');
-    const raceList = {}; 
+    const raceList = {};
 
     flatData.forEach((row, index) => {
         if (index === 0) return;
