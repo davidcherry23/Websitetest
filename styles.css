@@ -1,7 +1,9 @@
-/* Dark Mode */
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 header {
@@ -11,48 +13,145 @@ header {
     text-align: center;
 }
 
+h1 {
+    margin: 0;
+}
+
 main {
     padding: 20px;
 }
 
-#raceList tr:nth-child(even) {
-    background-color: #f9f9f9;
+form {
+    margin-bottom: 20px;
 }
 
-#raceList tr:nth-child(odd) {
-    background-color: #ffffff;
-}
-
-#searchBox {
-    margin-top: 10px;
-    padding: 8px;
-    border-radius: 4px;
-    width: 300px;
+input[type="file"] {
+    padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-footer {
-    text-align: center;
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center; /* Center the text */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#raceList {
+    margin-bottom: 20px;
+}
+
+#raceList a {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+    text-align: center; /* Center the text */
+}
+
+#raceList a:hover {
+    background-color: #d1d1d1;
+}
+
+
+#raceList a:hover {
+    background-color: #d1d1d1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
-footer a {
-    color: #007BFF;
-    text-decoration: none;
+th, td {
+    border: 1px solid #007BFF;
+    padding: 10px;
+    text-align: left; /* Default left alignment for cells */
 }
 
-button#darkModeToggle {
-    margin: 10px;
-    background-color: #333;
+th {
+    background-color: #007BFF;
     color: white;
+    text-align: center; /* Centered headers */
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+td.empty {
+    background-color: #fff; /* Empty cells will be white */
+}
+
+/* Specific styles for Weight column */
+td:nth-child(3) {
+    text-align: right; /* Align Weight to the right */
+}
+
+/* L3 AVG and other center-aligned columns */
+td:nth-child(5), /* L3 AVG */
+td:nth-child(6), /* 1LR */
+td:nth-child(7), /* 2LR */
+td:nth-child(8), /* 3LR */
+td:nth-child(9), /* 4LR */
+td:nth-child(10), /* 5LR */
+td:nth-child(11), /* 6LR */
+td:nth-child(12), /* Best */
+td:nth-child(13), /* OR */
+td:nth-child(14) { /* OR/BEST Diff */
+    text-align: center; /* Center these columns */
+}
+
+button.back {
+    margin-top: 20px;
+}
+
+/* Slim down the odds table */
+#oddsTable {
+    width: 50%; /* Reduce the width to make it slimmer */
+    margin: 20px auto; /* Center the table */
+    border-collapse: collapse; /* Remove space between table cells */
+}
+
+#oddsTable th, #oddsTable td {
+    padding: 8px 12px; /* Reduce padding to make it slimmer */
+    font-size: 14px; /* Adjust font size to make text more compact */
+}
+
+#oddsTable th {
+    background-color: #007BFF; /* Keep the same color as other headers */
+    color: white;
+    text-align: left; /* Align text to the left */
+}
+
+#oddsTable td {
+    border: 1px solid #007BFF; /* Keep borders consistent */
+}
+
+#oddsTable tr:nth-child(even) {
+    background-color: #f9f9f9; /* Optional: Zebra striping for readability */
+}
+
+#oddsTable tr:hover {
+    background-color: #f1f1f1; /* Optional: Hover effect */
 }
 
 @media (max-width: 600px) {
-    #searchBox {
-        width: 100%;
-    }
-
-    #oddsTable, #ratingsTable {
+    button {
         width: 100%;
     }
 }
