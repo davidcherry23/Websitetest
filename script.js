@@ -1,72 +1,86 @@
-const API_KEY = 'AIzaSyBfoy9gpe6UHjolsmoi9kAx-iapdYs1-_U'; // Your API Key
-const SPREADSHEET_ID = '1yFsWAUB163U6I4iyUWdQUitRKoY08ESXMIjgZdCH80Q'; // Your Spreadsheet ID
+// Search/Filter Feature
+const searchBox = document.getElementById('searchBox');
+searchBox.addEventListener('input', function() {
+    const searchTerm = searchBox.value.toLowerCase();
+    const rows = document.querySelectorAll('#raceList tr');
+    rows.forEach(row => {
+        const track = row.querySelector('td:first-child').textContent.toLowerCase();
+        const time = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+        if (track.includes(searchTerm) || time.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
 
-async function fetchData(sheetName) {
-    const range = `${sheetName}!A1:Z`; // Fetch all rows in the range
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
+// Dark Mode Toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+});
 
-    try {
-        const response = await axios.get(url);
-        console.log(`Fetched ${response.data.values.length} rows from ${sheetName}`);
-        return response.data.values; // Return the rows of your sheet
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return []; // Return an empty array on error
-    }
-}
-
+// Load races with live status
 async function loadRaceList() {
     const flatData = await fetchData('FLAT');
     const nhData = await fetchData('NH');
+    const raceList = {}; 
 
-    const raceList = {}; // Use an object to group by track
-
-    // Process FLAT data
     flatData.forEach((row, index) => {
-        if (index === 0) return; // Skip header row
+        if (index === 0) return;
         const time = row[0];
         const track = row[1];
         if (!raceList[track]) {
-            raceList[track] = new Set(); // Use a Set to avoid duplicate times
+            raceList[track] = new Set();
         }
-        raceList[track].add(time); // Add time to the Set
+        raceList[track].add(time);
     });
 
-    // Process NH data
     nhData.forEach((row, index) => {
-        if (index === 0) return; // Skip header row
+        if (index === 0) return;
         const time = row[0];
         const track = row[1];
         if (!raceList[track]) {
-            raceList[track] = new Set(); // Use a Set to avoid duplicate times
+            raceList[track] = new Set();
         }
-        raceList[track].add(time); // Add time to the Set
+        raceList[track].add(time);
     });
 
-    // Create the HTML for the race list in table format
     const raceListTable = document.getElementById('raceList');
+    let alternate = false;
     for (const track in raceList) {
-        const times = Array.from(raceList[track]); // Convert Set back to array
-        times.sort(); // Sort the times to display in order
-
-        // Create a table row for each track
+        const times = Array.from(raceList[track]).sort();
         const row = document.createElement('tr');
+        row.style.backgroundColor = alternate ? '#f0f0f0' : '#ffffff';
+        alternate = !alternate;
 
-        // Add track name as the first column
         const trackCell = document.createElement('td');
-        trackCell.textContent = track;
+        trackCell.innerHTML = `<img src="track-icon.png" alt="track-icon" style="width:20px;"> ${track}`;
         row.appendChild(trackCell);
 
-        // Add race times as individual columns
         times.forEach(time => {
             const timeCell = document.createElement('td');
-            timeCell.innerHTML = `<a href="ratings.html?track=${encodeURIComponent(track)}&time=${encodeURIComponent(time)}">${time}</a>`;
+            const statusIcon = determineRaceStatus(time); // Function to show live/completed status
+            timeCell.innerHTML = `<a href="ratings.html?track=${encodeURIComponent(track)}&time=${encodeURIComponent(time)}">${time} ${statusIcon}</a>`;
             row.appendChild(timeCell);
         });
 
-        raceListTable.appendChild(row); // Append the row to the table
+        raceListTable.appendChild(row);
     }
 }
 
-// Call the loadRaceList function to populate the page
+function determineRaceStatus(time) {
+    const currentTime = new Date();
+    const raceTime = new Date();
+    raceTime.setHours(...time.split(':').map(Number));
+    
+    if (currentTime > raceTime) {
+        return '<span style="color:red;">(Completed)</span>';
+    } else if (currentTime.toLocaleTimeString() === raceTime.toLocaleTimeString()) {
+        return '<span style="color:green;">(Live)</span>';
+    } else {
+        return '<span style="color:orange;">(Upcoming)</span>';
+    }
+}
+
 loadRaceList();
