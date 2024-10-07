@@ -37,78 +37,31 @@ async function fetchData(url, tableId, isJockey = true) {
         const headers = rows[0].map(header => header.trim().toLowerCase()); // Normalize headers
         console.log("Normalized Headers:", headers); // Log normalized headers
 
-        // Define the exact column names and the order we want to display them for Jockey data
+        // Define column names for each data type
         const jockeyColumns = [
-            "jockey",
-            "3day_runs",
-            "3day_wins",
-            "3day_places",
-            "3day_win_strike",
-            "3day_place_strike",
-            "3day_sp_profitloss",
-            "7day_runs",
-            "7day_wins",
-            "7day_places",
-            "7day_win_strike",
-            "7day_place_strike",
-            "7day_sp_profitloss",
-            "14day_runs",
-            "14day_wins",
-            "14day_places",
-            "14day_win_strike",
-            "14day_place_strike",
-            "14day_sp_profitloss",
-            "1yr_runs",
-            "1yr_wins",
-            "1yr_places",
-            "1yr_win_strike",
-            "1yr_place_strike",
-            "1yr_sp_profitloss"
+            "jockey", "3day_runs", "3day_wins", "3day_places", "3day_win_strike",
+            "3day_place_strike", "3day_sp_profitloss", "7day_runs", "7day_wins",
+            "7day_places", "7day_win_strike", "7day_place_strike", "7day_sp_profitloss",
+            "14day_runs", "14day_wins", "14day_places", "14day_win_strike",
+            "14day_place_strike", "14day_sp_profitloss", "1yr_runs", "1yr_wins",
+            "1yr_places", "1yr_win_strike", "1yr_place_strike", "1yr_sp_profitloss"
         ];
 
-        // Define the exact column names and the order we want to display them for Trainer data
         const trainerColumns = [
-            "trainer",
-            "3day_runs",
-            "3day_wins",
-            "3day_places",
-            "3day_win_strike",
-            "3day_place_strike",
-            "3day_sp_profitloss",
-            "7day_runs",
-            "7day_wins",
-            "7day_places",
-            "7day_win_strike",
-            "7day_place_strike",
-            "7day_sp_profitloss",
-            "14day_runs",
-            "14day_wins",
-            "14day_places",
-            "14day_win_strike",
-            "14day_place_strike",
-            "14day_sp_profitloss",
-            "1yr_runs",
-            "1yr_wins",
-            "1yr_places",
-            "1yr_win_strike",
-            "1yr_place_strike",
-            "1yr_sp_profitloss"
+            "trainer", "3day_runs", "3day_wins", "3day_places", "3day_win_strike",
+            "3day_place_strike", "3day_sp_profitloss", "7day_runs", "7day_wins",
+            "7day_places", "7day_win_strike", "7day_place_strike", "7day_sp_profitloss",
+            "14day_runs", "14day_wins", "14day_places", "14day_win_strike",
+            "14day_place_strike", "14day_sp_profitloss", "1yr_runs", "1yr_wins",
+            "1yr_places", "1yr_win_strike", "1yr_place_strike", "1yr_sp_profitloss"
         ];
 
-        // Define the exact column names and the order we want to display them for the Trainer Jockey Combo
         const comboColumns = [
-            "track",
-            "jockey",
-            "trainer",
-            "allcombineruns",
-            "allcombinewins",
-            "allcombinestrike",
-            "combinetrackruns",
-            "combinetrackwins",
-            "combinetrackstrike"
+            "track", "jockey", "trainer", "allcombineruns", "allcombinewins",
+            "allcombinestrike", "combinetrackruns", "combinetrackwins", "combinetrackstrike"
         ];
 
-        // Create indices map
+        // Create indices map for the current data type
         const indices = {};
         const currentColumns = isJockey ? jockeyColumns : trainerColumns;
         currentColumns.forEach(columnName => {
@@ -139,6 +92,7 @@ async function fetchData(url, tableId, isJockey = true) {
             return;
         }
 
+        // Add rows to the table
         filteredRows.forEach(row => {
             const newRow = document.createElement('tr');
             const cells = currentColumns.map(columnName => {
@@ -153,8 +107,7 @@ async function fetchData(url, tableId, isJockey = true) {
         // Handle Combo Data separately
         if (!isJockey) {
             const comboIndices = {};
-            const comboHeaders = rows[0].map(header => header.trim().toLowerCase());
-            console.log("Combo Normalized Headers:", comboHeaders); // Log combo normalized headers
+            const comboHeaders = headers; // Use already normalized headers
 
             comboColumns.forEach(columnName => {
                 const index = comboHeaders.findIndex(header => header === columnName.toLowerCase());
@@ -164,21 +117,10 @@ async function fetchData(url, tableId, isJockey = true) {
                 }
             });
 
-            const filteredComboRows = rows.slice(1).filter(row => {
-                const jockeyName = row[comboIndices['jockey']];
-                const trainerName = row[comboIndices['trainer']];
-                // Ensure both jockey and trainer names are valid
-                return (jockeyName && jockeyName.trim() !== "") && (trainerName && trainerName.trim() !== "");
-            });
+            console.log("Combo Found column indices:", comboIndices);
 
-            console.log("Filtered Combo Rows:", filteredComboRows); // Log filtered combo rows
-
-            if (filteredComboRows.length === 0) {
-                console.error("No valid combo data rows found");
-                return;
-            }
-
-            filteredComboRows.forEach(row => {
+            // Directly add all rows from the combo data without filtering
+            rows.slice(1).forEach(row => {
                 const newRow = document.createElement('tr');
                 const cells = comboColumns.map(columnName => {
                     const index = comboIndices[columnName];
