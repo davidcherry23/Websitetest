@@ -12,9 +12,6 @@ async function fetchData(url, tableId) {
     // Specify the required columns based on the new sheet structure
     const indices = {
         Jockey: headers.indexOf("Jockey"),
-        Date: headers.indexOf("Date"), // Assuming there's a Date column
-        RaceTime: headers.indexOf("Race Time"), // Assuming there's a Race Time column
-        Track: headers.indexOf("Track"), // Assuming there's a Track column
         '3Day_Runs': headers.indexOf("3Day_Runs"),
         '3Day_Wins': headers.indexOf("3Day_Wins"),
         '3Day_Places': headers.indexOf("3Day_Places"),
@@ -54,9 +51,6 @@ async function fetchData(url, tableId) {
     filteredRows.forEach(row => {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td>${row[indices.Date] || 'N/A'}</td>
-            <td>${row[indices.RaceTime] || 'N/A'}</td>
-            <td>${row[indices.Track] || 'N/A'}</td>
             <td>${row[indices.Jockey]}</td>
             <td>${row[indices['3Day_Runs']] || 'N/A'}</td>
             <td>${row[indices['3Day_Wins']] || 'N/A'}</td>
