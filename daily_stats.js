@@ -159,3 +159,7 @@ fetchData(jockeyUrl, "jockeyData", true);
 // Fetch Trainer Data
 const trainerUrl = "https://docs.google.com/spreadsheets/d/1CWFzSzLL6dN76SchoxaC94K5DZNskQZR08ikxhxpUW0/export?format=csv";
 fetchData(trainerUrl, "trainerData", false);
+
+// New code to fetch Trainer Jockey combo data
+const comboUrl = "https://docs.google.com/spreadsheets/d/14T8vC9U5-S9x_EedGSe_FRq3Wh6xdssdCVp7dxI1nC4/export?format=csv";
+fetchData(comboUrl, "trainerData", false);
