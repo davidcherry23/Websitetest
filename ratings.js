@@ -1,6 +1,6 @@
-const spreadsheetId = "1yFsWAUB163U6I4iyUWdQUitRKoY08ESXMIjgZdCH80Q";
+const spreadsheetId = "1dNt6s-j2qiOPkwj5rzqPW8611AOnhz4933DFfZXHcUw";
 const apiKey = "AIzaSyBfoy9gpe6UHjolsmoi9kAx-iapdYs1-_U";
-const flatRange = "FLAT!A2:O600"; // Adjust range if needed
+const flatRange = "FLAT!A2:O800"; // Adjust range if needed
 const nhRange = "NH!A2:O600"; 
 const flatOddsRange = "FLAT Odds!A2:D600"; // FLAT Odds tab range
 const nhOddsRange = "NH Odds!A2:D600";     // NH Odds tab range
