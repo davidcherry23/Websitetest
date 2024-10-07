@@ -127,11 +127,10 @@ async function fetchData(url, tableId, isJockey = true) {
             return;
         }
 
-        const filteredRows = rows.slice(1)
-            .filter(row => {
-                const name = isJockey ? row[indices['jockey']] : row[indices['trainer']];
-                return name && name.trim() !== ""; // Ensure we have a valid name
-            });
+        const filteredRows = rows.slice(1).filter(row => {
+            const name = isJockey ? row[indices['jockey']] : row[indices['trainer']];
+            return name && name.trim() !== ""; // Ensure we have a valid name
+        });
 
         console.log("Filtered Rows:", filteredRows); // Log filtered rows
 
@@ -165,12 +164,12 @@ async function fetchData(url, tableId, isJockey = true) {
                 }
             });
 
-            const filteredComboRows = rows.slice(1)
-                .filter(row => {
-                    const jockeyName = row[comboIndices['jockey']];
-                    const trainerName = row[comboIndices['trainer']];
-                    return (jockeyName && jockeyName.trim() !== "") || (trainerName && trainerName.trim() !== "");
-                });
+            const filteredComboRows = rows.slice(1).filter(row => {
+                const jockeyName = row[comboIndices['jockey']];
+                const trainerName = row[comboIndices['trainer']];
+                // Ensure both jockey and trainer names are valid
+                return (jockeyName && jockeyName.trim() !== "") && (trainerName && trainerName.trim() !== "");
+            });
 
             console.log("Filtered Combo Rows:", filteredComboRows); // Log filtered combo rows
 
