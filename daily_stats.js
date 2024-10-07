@@ -36,6 +36,7 @@ async function fetchData(url, tableId, isJockey = true) {
         tableBody.innerHTML = '';
 
         const headers = rows[0].map(header => header.trim().toLowerCase()); // Normalize headers
+        console.log("Normalized Headers:", headers);
 
         // Define the exact column names and the order we want to display them
         const displayColumns = isJockey 
@@ -112,8 +113,16 @@ async function fetchData(url, tableId, isJockey = true) {
 
         console.log("Found column indices:", indices);
 
+        // Check if there are any rows to process
+        if (rows.length <= 1) {
+            console.error("No data rows found in the CSV.");
+            return;
+        }
+
         const filteredRows = rows.slice(1)
             .filter(row => row.length > indices.jockey && row[indices.jockey] && row[indices.jockey].trim() !== "");
+
+        console.log("Filtered Rows:", filteredRows);
 
         if (filteredRows.length === 0) {
             console.error("No valid data rows found");
