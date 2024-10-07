@@ -151,6 +151,46 @@ async function fetchData(url, tableId, isJockey = true) {
             tableBody.appendChild(newRow);
         });
 
+        // Handle Combo Data separately
+        if (!isJockey) {
+            const comboIndices = {};
+            const comboHeaders = rows[0].map(header => header.trim().toLowerCase());
+            console.log("Combo Normalized Headers:", comboHeaders); // Log combo normalized headers
+
+            comboColumns.forEach(columnName => {
+                const index = comboHeaders.findIndex(header => header === columnName.toLowerCase());
+                comboIndices[columnName] = index;
+                if (index === -1) {
+                    console.error(`Combo Column not found: ${columnName}`);
+                }
+            });
+
+            const filteredComboRows = rows.slice(1)
+                .filter(row => {
+                    const jockeyName = row[comboIndices['jockey']];
+                    const trainerName = row[comboIndices['trainer']];
+                    return (jockeyName && jockeyName.trim() !== "") || (trainerName && trainerName.trim() !== "");
+                });
+
+            console.log("Filtered Combo Rows:", filteredComboRows); // Log filtered combo rows
+
+            if (filteredComboRows.length === 0) {
+                console.error("No valid combo data rows found");
+                return;
+            }
+
+            filteredComboRows.forEach(row => {
+                const newRow = document.createElement('tr');
+                const cells = comboColumns.map(columnName => {
+                    const index = comboIndices[columnName];
+                    const value = index !== -1 && index < row.length ? row[index] : 'N/A';
+                    return `<td>${value.replace(/^"|"$/g, '') || 'N/A'}</td>`;
+                });
+                newRow.innerHTML = cells.join('');
+                tableBody.appendChild(newRow);
+            });
+        }
+
     } catch (error) {
         console.error("Error fetching data:", error);
     }
@@ -166,4 +206,4 @@ fetchData(trainerUrl, "trainerData", false);
 
 // Fetch Trainer Jockey Combo Data
 const comboUrl = "https://docs.google.com/spreadsheets/d/14T8vC9U5-S9x_EedGSe_FRq3Wh6xdssdCVp7dxI1nC4/export?format=csv"; // Ensure this URL is correct
-fetchData(comboUrl, "trainerData", false); // You can specify a different table ID if needed
+fetchData(comboUrl, "comboData", false); // Use the correct table ID
