@@ -3,7 +3,7 @@ async function fetchData(url, tableId, isJockey = true) {
         const response = await fetch(url);
         const data = await response.text();
 
-        console.log("Raw data:", data);
+        console.log("Raw data:", data); // Log the raw data
 
         // Split into rows and handle quoted values correctly
         const rows = data.split('\n').map(row => {
@@ -25,8 +25,7 @@ async function fetchData(url, tableId, isJockey = true) {
             return cells;
         });
 
-        console.log("Headers:", rows[0]);
-        console.log("First few rows:", rows.slice(1, 5));
+        console.log("All Rows:", rows); // Log all rows after parsing
 
         const tableBody = document.querySelector(`#${tableId} tbody`);
         if (!tableBody) {
@@ -36,7 +35,7 @@ async function fetchData(url, tableId, isJockey = true) {
         tableBody.innerHTML = '';
 
         const headers = rows[0].map(header => header.trim().toLowerCase()); // Normalize headers
-        console.log("Normalized Headers:", headers);
+        console.log("Normalized Headers:", headers); // Log normalized headers
 
         // Define the exact column names and the order we want to display them
         const displayColumns = isJockey 
@@ -120,9 +119,12 @@ async function fetchData(url, tableId, isJockey = true) {
         }
 
         const filteredRows = rows.slice(1)
-            .filter(row => row.length > indices.jockey && row[indices.jockey] && row[indices.jockey].trim() !== "");
+            .filter(row => {
+                const jockeyOrTrainer = isJockey ? row[indices['jockey']] : row[indices['trainer']];
+                return jockeyOrTrainer && jockeyOrTrainer.trim() !== ""; // Ensure we have a valid name
+            });
 
-        console.log("Filtered Rows:", filteredRows);
+        console.log("Filtered Rows:", filteredRows); // Log filtered rows
 
         if (filteredRows.length === 0) {
             console.error("No valid data rows found");
