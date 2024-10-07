@@ -67,6 +67,19 @@ function processJockeyData(rows, tableId) {
         return name && name.trim() !== "";
     });
 
+    // Sort by 7-day runs and then by 7-day place strike
+    filteredRows.sort((a, b) => {
+        const runsA = parseInt(a[indices['7day_runs']]) || 0;
+        const runsB = parseInt(b[indices['7day_runs']]) || 0;
+        const placeStrikeA = parseFloat(a[indices['7day_place_strike']]) || 0;
+        const placeStrikeB = parseFloat(b[indices['7day_place_strike']]) || 0;
+
+        if (runsA !== runsB) {
+            return runsB - runsA; // Sort by 7-day runs descending
+        }
+        return placeStrikeB - placeStrikeA; // Sort by 7-day place strike descending
+    });
+
     filteredRows.forEach(row => {
         const newRow = document.createElement('tr');
         const cells = jockeyColumns.map(columnName => {
@@ -115,6 +128,19 @@ function processTrainerData(rows, tableId) {
         return name && name.trim() !== "";
     });
 
+    // Sort by 7-day runs and then by 7-day place strike
+    filteredRows.sort((a, b) => {
+        const runsA = parseInt(a[indices['7day_runs']]) || 0;
+        const runsB = parseInt(b[indices['7day_runs']]) || 0;
+        const placeStrikeA = parseFloat(a[indices['7day_place_strike']]) || 0;
+        const placeStrikeB = parseFloat(b[indices['7day_place_strike']]) || 0;
+
+        if (runsA !== runsB) {
+            return runsB - runsA; // Sort by 7-day runs descending
+        }
+        return placeStrikeB - placeStrikeA; // Sort by 7-day place strike descending
+    });
+
     filteredRows.forEach(row => {
         const newRow = document.createElement('tr');
         const cells = trainerColumns.map(columnName => {
@@ -154,7 +180,22 @@ function processComboData(rows, tableId) {
 
     console.log("Found combo column indices:", indices);
 
-    rows.slice(1).forEach(row => {
+    const filteredRows = rows.slice(1);
+
+    // Sort by combined runs and then by combined strike rate
+    filteredRows.sort((a, b) => {
+        const combineRunsA = parseInt(a[indices['allcombineruns']]) || 0;
+        const combineRunsB = parseInt(b[indices['allcombineruns']]) || 0;
+        const strikeA = parseFloat(a[indices['allcombinestrike']]) || 0;
+        const strikeB = parseFloat(b[indices['allcombinestrike']]) || 0;
+
+        if (combineRunsA !== combineRunsB) {
+            return combineRunsB - combineRunsA; // Sort by combined runs descending
+        }
+        return strikeB - strikeA; // Sort by combined strike rate descending
+    });
+
+    filteredRows.forEach(row => {
         const newRow = document.createElement('tr');
         const cells = comboColumns.map(columnName => {
             const index = indices[columnName];
