@@ -5,9 +5,25 @@ async function fetchData(url, tableId) {
 
         console.log("Raw data:", data);
 
-        const rows = data.split('\n').map(row => 
-            row.split('\t').map(cell => cell.trim().replace(/^["']|["']$/g, ''))
-        );
+        // Split into rows and handle quoted values correctly
+        const rows = data.split('\n').map(row => {
+            const cells = [];
+            let currentCell = '';
+            let withinQuotes = false;
+            
+            for (let char of row) {
+                if (char === '"') {
+                    withinQuotes = !withinQuotes;
+                } else if (char === ',' && !withinQuotes) {
+                    cells.push(currentCell.trim());
+                    currentCell = '';
+                } else {
+                    currentCell += char;
+                }
+            }
+            cells.push(currentCell.trim());
+            return cells;
+        });
 
         console.log("Headers:", rows[0]);
         console.log("First few rows:", rows.slice(1, 5));
@@ -86,7 +102,7 @@ async function fetchData(url, tableId) {
             const cells = displayColumns.map(columnName => {
                 const index = indices[columnName];
                 const value = index !== -1 && index < row.length ? row[index] : 'N/A';
-                return `<td>${value || 'N/A'}</td>`;
+                return `<td>${value.replace(/^"|"$/g, '') || 'N/A'}</td>`;
             });
             newRow.innerHTML = cells.join('');
             tableBody.appendChild(newRow);
