@@ -10,29 +10,33 @@
         header {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Space between elements in header */
+            justify-content: center; /* Center the title */
             padding: 10px 20px;
             background-color: #007BFF; /* Background color for header */
             color: white;
         }
 
-        h1 {
-            margin: 0; /* Remove margin for h1 */
-            font-size: 24px; /* Set size for title */
-        }
-
         .button {
             background-color: #FF5733; /* Button color */
             color: white; /* Text color */
-            padding: 10px 15px; /* Padding for the button */
+            padding: 5px 10px; /* Reduced padding for a smaller button */
             text-decoration: none; /* Remove underline */
             border-radius: 5px; /* Rounded corners */
             transition: background-color 0.3s; /* Transition for hover effect */
             margin-right: auto; /* Align button to the left */
+            font-size: 14px; /* Smaller font size for button */
         }
 
         .button:hover {
             background-color: #C70039; /* Change button color on hover */
+        }
+
+        h1 {
+            margin: 0; /* Remove margin for h1 */
+            font-size: 24px; /* Set size for title */
+            position: absolute; /* Position the title in the center */
+            left: 50%; /* Move it to the center horizontally */
+            transform: translateX(-50%); /* Center it correctly */
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
