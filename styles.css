@@ -75,7 +75,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow-x: auto; /* Enable horizontal scrolling for small screens */
+    max-width: 100%; /* Prevent the table from exceeding the container */
 }
 
 th, td {
@@ -157,9 +157,9 @@ button.back {
     }
 
     table {
-        width: 100%; /* Ensure table takes full width */
-        display: block; /* Make table scrollable on small screens */
+        display: block; /* Make the table block for scroll */
         overflow-x: auto; /* Enable horizontal scrolling */
+        white-space: nowrap; /* Prevent wrapping */
     }
 }
 
