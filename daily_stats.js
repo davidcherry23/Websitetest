@@ -10,7 +10,7 @@ async function fetchData(url, tableId, isJockey = true) {
             const cells = [];
             let currentCell = '';
             let withinQuotes = false;
-            
+
             for (let char of row) {
                 if (char === '"') {
                     withinQuotes = !withinQuotes;
@@ -160,6 +160,6 @@ fetchData(jockeyUrl, "jockeyData", true);
 const trainerUrl = "https://docs.google.com/spreadsheets/d/1CWFzSzLL6dN76SchoxaC94K5DZNskQZR08ikxhxpUW0/export?format=csv";
 fetchData(trainerUrl, "trainerData", false);
 
-// New code to fetch Trainer Jockey combo data
-const comboUrl = "https://docs.google.com/spreadsheets/d/14T8vC9U5-S9x_EedGSe_FRq3Wh6xdssdCVp7dxI1nC4/export?format=csv";
-fetchData(comboUrl, "trainerData", false);
+// Fetch Trainer Jockey Combo Data
+const comboUrl = "https://docs.google.com/spreadsheets/d/e/<your-published-id>/pub?output=csv"; // Replace with your actual published link
+fetchData(comboUrl, "trainerData", false); // Adjust this line if needed for your table ID
