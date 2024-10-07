@@ -5,14 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horse Racing Ratings</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the header and button */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Space between elements in header */
+            padding: 10px 20px;
+            background-color: #007BFF; /* Background color for header */
+            color: white;
+        }
+
+        h1 {
+            margin: 0; /* Remove margin for h1 */
+            font-size: 24px; /* Set size for title */
+        }
+
+        .button {
+            background-color: #FF5733; /* Button color */
+            color: white; /* Text color */
+            padding: 10px 15px; /* Padding for the button */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s; /* Transition for hover effect */
+            margin-right: auto; /* Align button to the left */
+        }
+
+        .button:hover {
+            background-color: #C70039; /* Change button color on hover */
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <header>
+        <a href="daily_stats.html" class="button">Daily Stats/Data</a> <!-- Button moved to the left -->
         <h1>Today's Horse Races</h1>
-        <!-- Removed the dropdown menu -->
-        <a href="daily_stats.html" class="button">Daily Stats/Data</a>
     </header>
     <main>
         <table id="raceList"></table>
