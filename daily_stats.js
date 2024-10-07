@@ -161,5 +161,5 @@ const trainerUrl = "https://docs.google.com/spreadsheets/d/1CWFzSzLL6dN76SchoxaC
 fetchData(trainerUrl, "trainerData", false);
 
 // Fetch Trainer Jockey Combo Data
-const comboUrl = "https://docs.google.com/spreadsheets/d/e/<your-published-id>/pub?output=csv"; // Replace with your actual published link
+const comboUrl = "https://docs.google.com/spreadsheets/d/14T8vC9U5-S9x_EedGSe_FRq3Wh6xdssdCVp7dxI1nC4/export?format=csv"; // Replace with your actual published link
 fetchData(comboUrl, "trainerData", false); // Adjust this line if needed for your table ID
