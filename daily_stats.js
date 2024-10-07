@@ -3,15 +3,12 @@ async function fetchData(url, tableId) {
         const response = await fetch(url);
         const data = await response.text();
 
-        // Log the raw data to see what is being fetched
         console.log("Raw data:", data);
 
-        // Split the CSV data into rows and clean up each cell
         const rows = data.split('\n').map(row => 
             row.split(',').map(cell => cell.trim().replace(/^["']|["']$/g, ''))
         );
 
-        // Log the first row (headers) and first few data rows to debug
         console.log("Headers:", rows[0]);
         console.log("First few rows:", rows.slice(1, 5));
 
@@ -20,60 +17,50 @@ async function fetchData(url, tableId) {
             console.error(`Table body with id ${tableId} not found`);
             return;
         }
-        tableBody.innerHTML = ''; // Clear existing data
+        tableBody.innerHTML = '';
 
-        const headers = rows[0]; // This is the header row
+        const headers = rows[0];
 
-        // Function to find column index, case insensitive and ignoring extra spaces
-        const findColumnIndex = (columnName) => {
-            const normalizedName = columnName.toLowerCase().replace(/\s+/g, ' ').trim();
-            const index = headers.findIndex(header => 
-                header.toLowerCase().replace(/\s+/g, ' ').trim() === normalizedName
-            );
-            if (index === -1) {
-                console.error(`Column not found: ${columnName}`);
-            }
-            return index;
-        };
-
-        // Specify the required columns based on the sheet structure
+        // Updated column names to match exactly what's in your Google Sheet
         const columnNames = {
             Jockey: "Jockey",
-            '3Day_Runs': "3-Day Runs",
-            '3Day_Wins': "3-Day Wins",
-            '3Day_Places': "3-Day Places",
-            '3Day_Win_Strike': "3-Day Win Strike",
-            '3Day_Place_Strike': "3-Day Place Strike",
-            '3Day_SP_ProfitLoss': "3-Day SP Profit/Loss",
-            '7Day_Runs': "7-Day Runs",
-            '7Day_Wins': "7-Day Wins",
-            '7Day_Places': "7-Day Places",
-            '7Day_Win_Strike': "7-Day Win Strike",
-            '7Day_Place_Strike': "7-Day Place Strike",
-            '7Day_SP_ProfitLoss': "7-Day SP Profit/Loss",
-            '14Day_Runs': "14-Day Runs",
-            '14Day_Wins': "14-Day Wins",
-            '14Day_Places': "14-Day Places",
-            '14Day_Win_Strike': "14-Day Win Strike",
-            '14Day_Place_Strike': "14-Day Place Strike",
-            '14Day_SP_ProfitLoss': "14-Day SP Profit/Loss",
-            '1Year_Runs': "1-Year Runs",
-            '1Year_Wins': "1-Year Wins",
-            '1Year_Places': "1-Year Places",
-            '1Year_Win_Strike': "1-Year Win Strike",
-            '1Year_Place_Strike': "1-Year Place Strike",
-            '1Year_SP_ProfitLoss': "1-Year SP Profit/Loss"
+            '3Day_Runs': "3Day_Runs",
+            '3Day_Wins': "3Day_Wins",
+            '3Day_Places': "3Day_Places",
+            '3Day_Win_Strike': "3Day_Win_Strike",
+            '3Day_Place_Strike': "3Day_Place_Strike",
+            '3Day_SP_ProfitLoss': "3Day_SP_ProfitLoss",
+            '7Day_Runs': "7Day_Runs",
+            '7Day_Wins': "7Day_Wins",
+            '7Day_Places': "7Day_Places",
+            '7Day_Win_Strike': "7Day_Win_Strike",
+            '7Day_Place_Strike': "7Day_Place_Strike",
+            '7Day_SP_ProfitLoss': "7Day_SP_ProfitLoss",
+            '14Day_Runs': "14Day_Runs",
+            '14Day_Wins': "14Day_Wins",
+            '14Day_Places': "14Day_Places",
+            '14Day_Win_Strike': "14Day_Win_Strike",
+            '14Day_Place_Strike': "14Day_Place_Strike",
+            '14Day_SP_ProfitLoss': "14Day_SP_ProfitLoss",
+            '1YR_Runs': "1YR_Runs",
+            '1YR_Wins': "1YR_Wins",
+            '1YR_Places': "1YR_Places",
+            '1YR_Win_Strike': "1YR_Win_Strike",
+            '1YR_Place_Strike': "1YR_Place_Strike",
+            '1YR_SP_ProfitLoss': "1YR_SP_ProfitLoss"
         };
 
         const indices = {};
         for (const [key, columnName] of Object.entries(columnNames)) {
-            indices[key] = findColumnIndex(columnName);
+            const index = headers.indexOf(columnName);
+            indices[key] = index;
+            if (index === -1) {
+                console.error(`Column not found: ${columnName}`);
+            }
         }
 
-        // Log found indices for debugging
         console.log("Found column indices:", indices);
 
-        // Filter and sort rows
         const filteredRows = rows.slice(1)
             .filter(row => row.length > indices.Jockey && row[indices.Jockey] && row[indices.Jockey].trim() !== "");
 
