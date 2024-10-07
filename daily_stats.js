@@ -92,12 +92,6 @@ async function fetchData(url, tableId, isJockey = true) {
                 "1yr_win_strike",
                 "1yr_place_strike",
                 "1yr_sp_profitloss",
-                "2yr_runs",
-                "2yr_wins",
-                "2yr_places",
-                "2yr_win_strike",
-                "2yr_place_strike",
-                "2yr_sp_profitloss"
             ];
 
         // Create indices map
