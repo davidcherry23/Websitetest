@@ -155,3 +155,39 @@ button.back {
         width: 100%;
     }
 }
+
+.stats-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+}
+
+.stats-section h2 {
+    color: #007BFF;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #007BFF;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
