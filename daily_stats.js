@@ -82,5 +82,5 @@ async function fetchData(url, tableId) {
 }
 
 // Fetch Jockey Data
-const jockeyUrl = "https://docs.google.com/spreadsheets/d/1o404gnNxauWQjXDnMDHng3fUGe3U0HTx750AKPH8PXc/gviz/tq?tqx=out:csv&sheet=Sheet1"; // Update to your sheet URL
+const jockeyUrl = "https://docs.google.com/spreadsheets/d/1o404gnNxauWQjXDnMDHng3fUGe3U0HTx750AKPH8PXc/edit?usp=sharing"; // Update to your sheet URL
 fetchData(jockeyUrl, "jockeyData");
