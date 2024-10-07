@@ -37,66 +37,81 @@ async function fetchData(url, tableId, isJockey = true) {
         const headers = rows[0].map(header => header.trim().toLowerCase()); // Normalize headers
         console.log("Normalized Headers:", headers); // Log normalized headers
 
-        // Define the exact column names and the order we want to display them
-        const displayColumns = isJockey 
-            ? [
-                "jockey",
-                "3day_runs",
-                "3day_wins",
-                "3day_places",
-                "3day_win_strike",
-                "3day_place_strike",
-                "3day_sp_profitloss",
-                "7day_runs",
-                "7day_wins",
-                "7day_places",
-                "7day_win_strike",
-                "7day_place_strike",
-                "7day_sp_profitloss",
-                "14day_runs",
-                "14day_wins",
-                "14day_places",
-                "14day_win_strike",
-                "14day_place_strike",
-                "14day_sp_profitloss",
-                "1yr_runs",
-                "1yr_wins",
-                "1yr_places",
-                "1yr_win_strike",
-                "1yr_place_strike",
-                "1yr_sp_profitloss"
-            ]
-            : [
-                "trainer",
-                "3day_runs",
-                "3day_wins",
-                "3day_places",
-                "3day_win_strike",
-                "3day_place_strike",
-                "3day_sp_profitloss",
-                "7day_runs",
-                "7day_wins",
-                "7day_places",
-                "7day_win_strike",
-                "7day_place_strike",
-                "7day_sp_profitloss",
-                "14day_runs",
-                "14day_wins",
-                "14day_places",
-                "14day_win_strike",
-                "14day_place_strike",
-                "14day_sp_profitloss",
-                "1yr_runs",
-                "1yr_wins",
-                "1yr_places",
-                "1yr_win_strike",
-                "1yr_place_strike",
-                "1yr_sp_profitloss",
-            ];
+        // Define the exact column names and the order we want to display them for Jockey data
+        const jockeyColumns = [
+            "jockey",
+            "3day_runs",
+            "3day_wins",
+            "3day_places",
+            "3day_win_strike",
+            "3day_place_strike",
+            "3day_sp_profitloss",
+            "7day_runs",
+            "7day_wins",
+            "7day_places",
+            "7day_win_strike",
+            "7day_place_strike",
+            "7day_sp_profitloss",
+            "14day_runs",
+            "14day_wins",
+            "14day_places",
+            "14day_win_strike",
+            "14day_place_strike",
+            "14day_sp_profitloss",
+            "1yr_runs",
+            "1yr_wins",
+            "1yr_places",
+            "1yr_win_strike",
+            "1yr_place_strike",
+            "1yr_sp_profitloss"
+        ];
+
+        // Define the exact column names and the order we want to display them for Trainer data
+        const trainerColumns = [
+            "trainer",
+            "3day_runs",
+            "3day_wins",
+            "3day_places",
+            "3day_win_strike",
+            "3day_place_strike",
+            "3day_sp_profitloss",
+            "7day_runs",
+            "7day_wins",
+            "7day_places",
+            "7day_win_strike",
+            "7day_place_strike",
+            "7day_sp_profitloss",
+            "14day_runs",
+            "14day_wins",
+            "14day_places",
+            "14day_win_strike",
+            "14day_place_strike",
+            "14day_sp_profitloss",
+            "1yr_runs",
+            "1yr_wins",
+            "1yr_places",
+            "1yr_win_strike",
+            "1yr_place_strike",
+            "1yr_sp_profitloss"
+        ];
+
+        // Define the exact column names and the order we want to display them for the Trainer Jockey Combo
+        const comboColumns = [
+            "track",
+            "jockey",
+            "trainer",
+            "allcombineruns",
+            "allcombinewins",
+            "allcombinestrike",
+            "combinetrackruns",
+            "combinetrackwins",
+            "combinetrackstrike"
+        ];
 
         // Create indices map
         const indices = {};
-        displayColumns.forEach(columnName => {
+        const currentColumns = isJockey ? jockeyColumns : trainerColumns;
+        currentColumns.forEach(columnName => {
             const index = headers.findIndex(header => header === columnName.toLowerCase());
             indices[columnName] = index;
             if (index === -1) {
@@ -114,8 +129,8 @@ async function fetchData(url, tableId, isJockey = true) {
 
         const filteredRows = rows.slice(1)
             .filter(row => {
-                const jockeyOrTrainer = isJockey ? row[indices['jockey']] : row[indices['trainer']];
-                return jockeyOrTrainer && jockeyOrTrainer.trim() !== ""; // Ensure we have a valid name
+                const name = isJockey ? row[indices['jockey']] : row[indices['trainer']];
+                return name && name.trim() !== ""; // Ensure we have a valid name
             });
 
         console.log("Filtered Rows:", filteredRows); // Log filtered rows
@@ -125,20 +140,9 @@ async function fetchData(url, tableId, isJockey = true) {
             return;
         }
 
-        filteredRows.sort((a, b) => {
-            const aRuns = parseInt(a[indices['3day_runs']]) || 0;
-            const bRuns = parseInt(b[indices['3day_runs']]) || 0;
-            const runsDiff = bRuns - aRuns;
-            if (runsDiff !== 0) return runsDiff;
-            
-            const aStrike = parseFloat(a[indices['3day_place_strike']]) || 0;
-            const bStrike = parseFloat(b[indices['3day_place_strike']]) || 0;
-            return bStrike - aStrike;
-        });
-
         filteredRows.forEach(row => {
             const newRow = document.createElement('tr');
-            const cells = displayColumns.map(columnName => {
+            const cells = currentColumns.map(columnName => {
                 const index = indices[columnName];
                 const value = index !== -1 && index < row.length ? row[index] : 'N/A';
                 return `<td>${value.replace(/^"|"$/g, '') || 'N/A'}</td>`;
@@ -161,5 +165,5 @@ const trainerUrl = "https://docs.google.com/spreadsheets/d/1CWFzSzLL6dN76SchoxaC
 fetchData(trainerUrl, "trainerData", false);
 
 // Fetch Trainer Jockey Combo Data
-const comboUrl = "https://docs.google.com/spreadsheets/d/14T8vC9U5-S9x_EedGSe_FRq3Wh6xdssdCVp7dxI1nC4/export?format=csv"; // Replace with your actual published link
-fetchData(comboUrl, "trainerData", false); // Adjust this line if needed for your table ID
+const comboUrl = "https://docs.google.com/spreadsheets/d/14T8vC9U5-S9x_EedGSe_FRq3Wh6xdssdCVp7dxI1nC4/export?format=csv"; // Ensure this URL is correct
+fetchData(comboUrl, "trainerData", false); // You can specify a different table ID if needed
