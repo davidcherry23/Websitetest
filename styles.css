@@ -70,10 +70,12 @@ input[type="file"] {
     background-color: #d1d1d1;
 }
 
+/* Styling for tables */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling for small screens */
 }
 
 th, td {
@@ -152,6 +154,12 @@ button.back {
 @media (max-width: 600px) {
     button {
         width: 100%;
+    }
+
+    table {
+        width: 100%; /* Ensure table takes full width */
+        display: block; /* Make table scrollable on small screens */
+        overflow-x: auto; /* Enable horizontal scrolling */
     }
 }
 
