@@ -6,7 +6,7 @@ async function fetchData(url, tableId) {
         console.log("Raw data:", data);
 
         const rows = data.split('\n').map(row => 
-            row.split(',').map(cell => cell.trim().replace(/^["']|["']$/g, ''))
+            row.split('\t').map(cell => cell.trim().replace(/^["']|["']$/g, ''))
         );
 
         console.log("Headers:", rows[0]);
@@ -21,43 +21,44 @@ async function fetchData(url, tableId) {
 
         const headers = rows[0];
 
-        // Updated column names to match exactly what's in your Google Sheet
-        const columnNames = {
-            Jockey: "Jockey",
-            '3Day_Runs': "3Day_Runs",
-            '3Day_Wins': "3Day_Wins",
-            '3Day_Places': "3Day_Places",
-            '3Day_Win_Strike': "3Day_Win_Strike",
-            '3Day_Place_Strike': "3Day_Place_Strike",
-            '3Day_SP_ProfitLoss': "3Day_SP_ProfitLoss",
-            '7Day_Runs': "7Day_Runs",
-            '7Day_Wins': "7Day_Wins",
-            '7Day_Places': "7Day_Places",
-            '7Day_Win_Strike': "7Day_Win_Strike",
-            '7Day_Place_Strike': "7Day_Place_Strike",
-            '7Day_SP_ProfitLoss': "7Day_SP_ProfitLoss",
-            '14Day_Runs': "14Day_Runs",
-            '14Day_Wins': "14Day_Wins",
-            '14Day_Places': "14Day_Places",
-            '14Day_Win_Strike': "14Day_Win_Strike",
-            '14Day_Place_Strike': "14Day_Place_Strike",
-            '14Day_SP_ProfitLoss': "14Day_SP_ProfitLoss",
-            '1YR_Runs': "1YR_Runs",
-            '1YR_Wins': "1YR_Wins",
-            '1YR_Places': "1YR_Places",
-            '1YR_Win_Strike': "1YR_Win_Strike",
-            '1YR_Place_Strike': "1YR_Place_Strike",
-            '1YR_SP_ProfitLoss': "1YR_SP_ProfitLoss"
-        };
+        // Define the exact column names and the order we want to display them
+        const displayColumns = [
+            "Jockey",
+            "3Day_Runs",
+            "3Day_Wins",
+            "3Day_Places",
+            "3Day_Win_Strike",
+            "3Day_Place_Strike",
+            "3Day_SP_ProfitLoss",
+            "7Day_Runs",
+            "7Day_Wins",
+            "7Day_Places",
+            "7Day_Win_Strike",
+            "7Day_Place_Strike",
+            "7Day_SP_ProfitLoss",
+            "14Day_Runs",
+            "14Day_Wins",
+            "14Day_Places",
+            "14Day_Win_Strike",
+            "14Day_Place_Strike",
+            "14Day_SP_ProfitLoss",
+            "1YR_Runs",
+            "1YR_Wins",
+            "1YR_Places",
+            "1YR_Win_Strike",
+            "1YR_Place_Strike",
+            "1YR_SP_ProfitLoss"
+        ];
 
+        // Create indices map
         const indices = {};
-        for (const [key, columnName] of Object.entries(columnNames)) {
+        displayColumns.forEach(columnName => {
             const index = headers.indexOf(columnName);
-            indices[key] = index;
+            indices[columnName] = index;
             if (index === -1) {
                 console.error(`Column not found: ${columnName}`);
             }
-        }
+        });
 
         console.log("Found column indices:", indices);
 
@@ -82,7 +83,8 @@ async function fetchData(url, tableId) {
 
         filteredRows.forEach(row => {
             const newRow = document.createElement('tr');
-            const cells = Object.entries(indices).map(([key, index]) => {
+            const cells = displayColumns.map(columnName => {
+                const index = indices[columnName];
                 const value = index !== -1 && index < row.length ? row[index] : 'N/A';
                 return `<td>${value || 'N/A'}</td>`;
             });
